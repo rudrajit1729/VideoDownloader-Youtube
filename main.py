@@ -27,42 +27,22 @@ def clearall():
     clearpath()
 
 def download_video():
-    try:
-        
-        youtube_url = str(u.get().strip())
-        path = str(p.get().strip())
-        
-        if path == "" or youtube_url == "":
-            raise ValueError
-        
-        yt = Youtube(youtube_link)
-        
-        if youtube_url.startswith('https://www.youtube.com/'):
-            
-            if quality.get() == 0:
-                myStream = YouTube(youtube_url).streams.first()
-                myStream.download(str(p.get().strip()))
-                #video = videos[0]
-                
-            else:
-                myStream = YouTube(youtube_url).streams.last()
-                myStream.download(str(p.get().strip()))
-                
-            clearall()
-            
+    youtube_url = str(u.get().strip())
+    if youtube_url.startswith('https://www.youtube.com/'):
+        if quality.get() == 0:
+            myStream = YouTube(youtube_url).streams.first()
+            myStream.download(str(p.get().strip()))
+            #video = videos[0]
         else:
-            #===================================Update User=======================================
-            info = "You might forgot to enter a correct Url or path or haven't checked the Quality"
-            messagebox.showinfo("Information", info)
-            
-    except ValueError as e:
-        info = "Path & URL fields can't be empty"
+            myStream = YouTube(youtube_url).streams.last()
+            myStream.download(str(p.get().strip()))
+        clearall()
+    else:
+        # ==================================================Update User========================
+        info = "You might forgot to enter a correct Url or path or haven't checked the Quality"
         messagebox.showinfo("Information", info)
-    except:
-        error = "Please Check Connection!!"
-        messagebox.showerror("Connection Error:(", error)
-        
 
+        
 #====================RadioButton===============================================
 
 rdbtn1 = Radiobutton(root, text="High Quality", activeforeground='green',bg = "red", variable=quality,  value=0)
